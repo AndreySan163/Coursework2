@@ -12,11 +12,18 @@ public class NetworkScanner {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите IP-адрес для сканирования: ");
-        String ip = scanner.nextLine();
+        String ipAddress = scanner.nextLine();
+        List<String> activeDevices = new ArrayList<>();
+        List<Integer> openPorts = scanPorts(ipAddress);
 
-        List<Integer> openPorts = scanPorts(ip);
-
-        System.out.println("Сканирование сети завершено. Найдены открытые порты: " + openPorts);
+       System.out.println("Активные устройства:");
+        for (String device : activeDevices) {
+            System.out.println(device);
+        }
+        System.out.println("Доступные порты:");
+        for (int port : openPorts) {
+            System.out.println(port);
+        }
 
         System.out.print("Хотите ли вы сохранить результаты в файл? (да/нет): ");
         String saveToFile = scanner.nextLine();
@@ -32,7 +39,8 @@ public class NetworkScanner {
     public static List<Integer> scanPorts(String ip) {
         List<Integer> openPorts = new ArrayList<>();
 
-        for (int port = 1; port <= 65535; port++) {
+
+        for (int port = 1; port <= 1000; port++) {
             try {
                 Socket socket = new Socket();
                 socket.connect(new InetSocketAddress(ip, port), 1000);
