@@ -13,8 +13,9 @@ public class NetworkScanner {
 
         System.out.print("Введите IP-адрес для сканирования: ");
         String ipAddress = scanner.nextLine();
+
         List<String> activeDevices = new ArrayList<>();
-        List<Integer> openPorts = scanPorts(ipAddress);
+        List<Integer> openPorts = new ArrayList<>();
 
        System.out.println("Активные устройства:");
         for (String device : activeDevices) {
@@ -36,14 +37,15 @@ public class NetworkScanner {
         scanner.close();
     }
 
-    public static List<Integer> scanPorts(String ip) {
-        List<Integer> openPorts = new ArrayList<>();
+    public static List<Integer> scanPorts(String ipAddress) {
+
+        List<Integer> openPorts = scanPorts(ipAddress);
 
 
         for (int port = 1; port <= 1000; port++) {
             try {
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(ip, port), 1000);
+                socket.connect(new InetSocketAddress(ipAddress, port), 1000);
                 socket.close();
                 openPorts.add(port);
             } catch (IOException ignored) {
